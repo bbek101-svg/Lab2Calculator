@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
+
 package ca.sait.lab2calculator.servlets;
 
 import java.io.IOException;
@@ -47,6 +44,22 @@ public class AgeCalculatorServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+       
+        if(request.getParameter("age") != ""){
+            try{
+                String ageString = request.getParameter("age");
+                int age = Integer.parseInt(ageString);
+                int ageNextBirthday = age + 1;
+                request.setAttribute("message", "You will be " + ageNextBirthday+ " after your next birthday.");
+            }catch(NumberFormatException e){
+                request.setAttribute("message", "You must enter a valid number!");
+            }
+                
+                
+        }else{
+            request.setAttribute("message","The age value is missing");
+        }
+        
         getServletContext().getRequestDispatcher("/WEB-INF/agecalculator.jsp").forward(request, response);
     }
 
